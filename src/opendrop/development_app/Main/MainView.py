@@ -21,17 +21,25 @@ class MainView(GtkView, IMainView):
         setting_button = Gtk.Button("Settings")
 
         # Pendant Button
+        pendant_box = Gtk.VBox()
+        pendant_title = Gtk.Label("Pendant Drop")
         pendant_image = Gtk.Image()
         pendant_image.set_from_file("../resources/images/pendant.png")
         pendant_button = Gtk.Button()
-        pendant_button.add(pendant_image)
+        pendant_box.add(pendant_title)
+        pendant_box.add(pendant_image)
+        pendant_button.add(pendant_box)
 
 
         # Contact Button
+        contact_box = Gtk.VBox()
+        contact_title = Gtk.Label("Contact Angle")
         contact_image = Gtk.Image()
         contact_image.set_from_file("../resources/images/contact.png")
         contact_button = Gtk.Button()
-        contact_button.add(contact_image)
+        contact_box.add(contact_title)
+        contact_box.add(contact_image)
+        contact_button.add(contact_box)
 
         # Headers
         measurement_title = Gtk.Label("Measurements:")
