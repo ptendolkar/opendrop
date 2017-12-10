@@ -18,12 +18,14 @@ class MainView(GtkView, IMainView):
         about_button = Gtk.Button("About")
         help_button = Gtk.Button("Help")
         camera_button = Gtk.Button("Camera Test")
+        setting_button = Gtk.Button("Settings")
 
         # Pendant Button
         pendant_image = Gtk.Image()
         pendant_image.set_from_file("../resources/images/pendant.png")
         pendant_button = Gtk.Button()
         pendant_button.add(pendant_image)
+
 
         # Contact Button
         contact_image = Gtk.Image()
@@ -32,9 +34,9 @@ class MainView(GtkView, IMainView):
         contact_button.add(contact_image)
 
         # Headers
-        title = Gtk.Label("OpenDrop")
         measurement_title = Gtk.Label("Measurements:")
-        setting_button = Gtk.Button("Settings")
+        camera_title = Gtk.Label("Select Camera Type: ")
+
 
         # Boxes
         measurement_box = Gtk.VBox()
@@ -43,6 +45,33 @@ class MainView(GtkView, IMainView):
         measurement_grid.attach_next_to(pendant_button, measurement_title, Gtk.PositionType.BOTTOM, 1, 1)
         measurement_grid.attach_next_to(contact_button, pendant_button, Gtk.PositionType.BOTTOM, 1, 1)
         measurement_box.add(measurement_grid)
+
+        camera_options_box = Gtk.VBox()
+        camera_options_box.add(camera_title)
+
+        # Camera selector (Stack switcher)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        camera_options_box.add(box)
+
+        main_area = Gtk.Stack()
+        main_area.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
+        main_area.set_transition_duration(2000)
+
+        flea3 = Gtk.Label("")
+        main_area.add_titled(flea3, "flea3", "Flea3")
+
+        usb = Gtk.Label("")
+        main_area.add_titled(usb, "usb", "USB")
+
+        local_image = Gtk.Label("")
+        main_area.add_titled(local_image, "local_image", "Local Image")
+
+        stack_switcher = Gtk.StackSwitcher()
+        stack_switcher.set_stack(main_area)
+
+        box.pack_start(stack_switcher, True, True, 0)
+        box.pack_start(main_area, True, True, 0)
+
 
         # Events
         about_button.event_name = "on_about_button_clicked"
@@ -67,6 +96,7 @@ class MainView(GtkView, IMainView):
         grid.attach_next_to(about_button, logo, Gtk.PositionType.BOTTOM, 1, 2)
         grid.attach_next_to(help_button, about_button, Gtk.PositionType.BOTTOM, 1, 1)
         grid.attach_next_to(measurement_box, logo, Gtk.PositionType.RIGHT, 1, 1)
+        grid.attach_next_to(camera_options_box, measurement_box, Gtk.PositionType.BOTTOM, 1, 1)
         grid.attach_next_to(setting_button, help_button, Gtk.PositionType.BOTTOM, 1, 1)
         grid.attach_next_to(camera_button, setting_button, Gtk.PositionType.BOTTOM, 1, 1)
         self.window.show_all()
