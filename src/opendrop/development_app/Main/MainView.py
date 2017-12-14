@@ -41,45 +41,12 @@ class MainView(GtkView, IMainView):
         contact_box.add(contact_image)
         contact_button.add(contact_box)
 
-        # Headers
-        measurement_title = Gtk.Label("Measurements:")
-        camera_title = Gtk.Label("Select Camera Type: ")
-
-
         # Boxes
         measurement_box = Gtk.VBox()
         measurement_grid = Gtk.Grid()
-        measurement_grid.attach(measurement_title, 0, 0, 1, 1)
-        measurement_grid.attach_next_to(pendant_button, measurement_title, Gtk.PositionType.BOTTOM, 1, 1)
+        measurement_grid.attach(pendant_button, 0, 0, 1, 1)
         measurement_grid.attach_next_to(contact_button, pendant_button, Gtk.PositionType.BOTTOM, 1, 1)
         measurement_box.add(measurement_grid)
-
-        camera_options_box = Gtk.VBox()
-        camera_options_box.add(camera_title)
-
-        # Camera selector (Stack switcher)
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        camera_options_box.add(box)
-
-        main_area = Gtk.Stack()
-        main_area.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
-        main_area.set_transition_duration(2000)
-
-        flea3 = Gtk.Label("")
-        main_area.add_titled(flea3, "flea3", "Flea3")
-
-        usb = Gtk.Label("")
-        main_area.add_titled(usb, "usb", "USB")
-
-        local_image = Gtk.Label("")
-        main_area.add_titled(local_image, "local_image", "Local Image")
-
-        stack_switcher = Gtk.StackSwitcher()
-        stack_switcher.set_stack(main_area)
-
-        box.pack_start(stack_switcher, True, True, 0)
-        box.pack_start(main_area, True, True, 0)
-
 
         # Events
         about_button.event_name = "on_about_button_clicked"
@@ -98,19 +65,36 @@ class MainView(GtkView, IMainView):
                        camera_button):
             button.connect('clicked', self.on_buttonx_clicked)
 
-
         # UI setup
         grid.attach(logo, 0, 0, 1, 1)
         grid.attach_next_to(about_button, logo, Gtk.PositionType.BOTTOM, 1, 2)
         grid.attach_next_to(help_button, about_button, Gtk.PositionType.BOTTOM, 1, 1)
         grid.attach_next_to(measurement_box, logo, Gtk.PositionType.RIGHT, 1, 1)
-        grid.attach_next_to(camera_options_box, measurement_box, Gtk.PositionType.BOTTOM, 1, 1)
         grid.attach_next_to(setting_button, help_button, Gtk.PositionType.BOTTOM, 1, 1)
         grid.attach_next_to(camera_button, setting_button, Gtk.PositionType.BOTTOM, 1, 1)
+
         self.window.show_all()
 
+        # About dialog
+        self.about_dialog = Gtk.AboutDialog(
+            program_name='Sample Application',
+            version='1.0.0',
+            website='http://www.example.org',
+            comments='Example application with sample code to demonstrate use.',
+            authors=['John',
+                     'Jane',
+                     'Jackson',
+                     'Jennifer'],
+            documenters=['Wayne'],
+            transient_for=self.window, modal=True
+        )
 
 
     # Fires event
     def on_buttonx_clicked(self, button: Gtk.Button) -> None:
         self.fire(button.event_name)
+
+    def show_about_dialog(self) -> None:
+        response = self.about_dialog.run()
+        if response == Gtk.ResponseType.DELETE_EVENT or response == Gtk.ResponseType.CANCEL:
+            self.about_dialog.hide()
