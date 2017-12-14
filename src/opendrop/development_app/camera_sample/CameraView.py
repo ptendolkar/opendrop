@@ -1,7 +1,7 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, GdkPixbuf
 from opendrop.development_app.bases.GtkView import GtkView
 from opendrop.development_app.iviews.ICameraView import ICameraView
-
+import cv2
 
 class CameraView(GtkView, ICameraView):
     def setup(self) -> None:
@@ -10,4 +10,4 @@ class CameraView(GtkView, ICameraView):
 
 
 
-
+        self.window.show_all()

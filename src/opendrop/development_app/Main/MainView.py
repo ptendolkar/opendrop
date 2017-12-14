@@ -77,10 +77,10 @@ class MainView(GtkView, IMainView):
 
         # About dialog
         self.about_dialog = Gtk.AboutDialog(
-            program_name='Sample Application',
-            version='1.0.0',
-            website='http://www.example.org',
-            comments='Example application with sample code to demonstrate use.',
+            program_name='Opendrop',
+            version='2.0.0',
+            website='https://github.com/jdber1/opendrop',
+            comments='Opendrop is an opensource tensiometry software.',
             authors=['John',
                      'Jane',
                      'Jackson',
