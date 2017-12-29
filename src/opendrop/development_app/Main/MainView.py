@@ -89,7 +89,6 @@ class MainView(GtkView, IMainView):
             transient_for=self.window, modal=True
         )
 
-
     # Fires event
     def on_buttonx_clicked(self, button: Gtk.Button) -> None:
         self.fire(button.event_name)
